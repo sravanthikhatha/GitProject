@@ -1,33 +1,32 @@
 pipeline {
-agent any
+    agent any
 
-stages {
-stage('checkout') {
-steps {
-git branch:'main',url:'https://github.com/sravanthikhatha/GitProject.git'
-}
-}
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Nandini-0905/gitproject.git'
+            }
+        }
 
-stage('Deploy') {
-steps {
-sh '''
-mkdir -p deployed_html
-cp * .html deployed_html/
-'''
-}
-}
-}
+        stage('Deploy') {
+            steps {
+                sh '''
+                    mkdir -p deployed_html
+                    cp form.html deployed_html/
+                '''
+            }
+        }
+    }
 
-post {
-success {
-publishHTML(target: [
-allowMissing: false,
-keepAll: true,
-reportDir: 'deployed_html',
-reportFiles: 'form.html',
-reportName: 'My Webpage' 
-]) 
+    post {
+        success {
+            publishHTML(target: [
+                allowMissing: false,
+                keepAll: true,
+                reportDir: 'deployed_html',
+                reportFiles: 'form.html',
+                reportName: 'My Webpage'
+            ])
+        }
+    }
 }
-}
-}
-
