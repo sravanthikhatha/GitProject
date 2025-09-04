@@ -7,11 +7,26 @@ steps{
 git branch:'main',url:'https://github.com/sravanthikhatha/gitproject/new/main'
 }
 }
+
 stage('Deploy'){
 steps{
 sh"
-mkdir-p deployed-html
-cp * html deployed-html/
-"'
+mkdir -p deployed_html
+cp * .html deployed_html/
+' ' '
 }
 }
+
+post {
+success {
+publishHTML(target: [
+allowMissing: false,
+keepAll: true,
+reportDir: 'deployed_html',
+reportFiles: 'form.html',
+reportName: 'My Webpage' 
+]) 
+}
+}
+}
+
